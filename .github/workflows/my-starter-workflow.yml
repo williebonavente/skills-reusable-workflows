@@ -5,16 +5,20 @@ on:
 
 jobs:
   call-reusable-workflow:
+    strategy:
+      matrix:
+        nodeversion: [14, 16, 18, 20]
     uses: ./.github/workflows/reusable-workflow.yml
     with:
-      node: 14
-  build:
-    runs-on: ubuntu-latest
+      node: ${{ matrix.nodeversion }}
 
-    steps:
-      - uses: actions/checkout@v4
+    build:
+      runs-on: ubuntu-latest
 
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy to your project.
+      steps:
+        - uses: actions/checkout@v4
+
+        - name: Run a multi-line script
+          run: |
+            echo Add other actions to build,
+            echo test, and deploy to your project.
